@@ -1,0 +1,78 @@
+# Patch for Asus Ambient Light Sensor device to work with my AsusNBFnKeys driver
+
+# Modifying method RALS of ALS device to work with keyboard backlight and report its value
+into Method label RALS replace_content begin
+            If (ALAE)\n
+            {\n
+                Store (RRAM (0x04C9), Local0)\n
+                And (Local0, 0x0F, Local0)\n
+                If (LLessEqual (Local0, One))\n
+                {\n
+                    Store (0x32, Local1)\n
+                    ^^^^ATKD.SKBL (0x03)\n
+                    Store (One, Local2)\n
+                }\n
+                Else\n
+                {\n
+                    If (LLessEqual (Local0, 0x06))\n
+                    {\n
+                        Store (0xC8, Local1)\n
+                        ^^^^ATKD.SKBL (0x02)\n
+                        Store (0x02, Local2)\n
+                    }\n
+                    Else\n
+                    {\n
+                        If (LLessEqual (Local0, 0x0A))\n
+                        {\n
+                            Store (0x0190, Local1)\n
+                            ^^^^ATKD.SKBL (One)\n
+                            Store (0x03, Local2)\n
+                        }\n
+                        Else\n
+                        {\n
+                            If (LLessEqual (Local0, 0x0E))\n
+                            {\n
+                                Store (0x0258, Local1)\n
+                            }\n
+                            Else\n
+                            {\n
+                                Store (0x0320, Local1)\n
+                            }\n
+                            ^^^^ATKD.SKBL (Zero)\n
+                            Store (0x04, Local2)\n
+                        }\n
+                    }\n
+                }\n
+                Return (Local2)\n
+            }\n
+            Else\n
+            {\n
+                Return (0xC8)\n
+            }
+ end;
+
+# Modifying method _QDD and _QCD methods of ALS device notifiers to notify
+into Method label _QDD replace_content begin
+             Notify (ALS, 0x80)\n
+             If (ATKP)\n
+             {\n
+                 ^^^^ATKD.IANE (0xC6)\n
+             }
+end;
+
+into Method label _QCD replace_content begin
+            Notify (ALS, 0x80)\n
+             If (ATKP)\n
+             {\n
+                 ^^^^ATKD.IANE (0xC7)\n
+             }
+end;
+
+# Inserting method ALSS for reading ambient illuminance values from Asus Fn keys kext
+into method label ALSS remove_entry;
+into device label ATKD insert begin
+Method (ALSS, 0, NotSerialized)\n
+            {\n
+                Return (^^PCI0.LPCB.EC0.RALS ())\n
+            }
+end;

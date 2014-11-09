@@ -1,0 +1,17 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Fix Bluetooth Timeout</string>
+				<key>Find</key>
+				<data>
+				AAAAD4UHAQAA
+				</data>
+				<key>Name</key>
+				<string>IOBluetoothHostControllerUSBTransport</string>
+				<key>Replace</key>
+				<data>
+				AAAAD4QHAQAA
+				</data>
+			</dict>
+	</array>

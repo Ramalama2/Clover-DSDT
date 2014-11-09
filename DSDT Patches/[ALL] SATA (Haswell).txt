@@ -1,0 +1,20 @@
+#By Ramalama
+#NOT Need above 10.9.4!
+
+into method label _DSM parent_adr 0x001F0002 remove_entry;
+into device name_adr 0x001F0002 insert
+begin
+Method (_DSM, 4, NotSerialized)\n
+                { Store (Package (0x0E) {\n
+                "device-id", Buffer(0x04) { 0x03, 0x8c, 0x00, 0x00 },\n
+                "IOName", Buffer(0x0D) { "pci8086,8c03" },\n
+                "name", Buffer(0x0D) { "pci8086,8c03" },\n
+                "compatible", Buffer () { "SSD0" },\n
+                "subsystem-vendor-id", Buffer(0x04) { 0x86, 0x80, 0x00, 0x00 },\n
+                "sata-express-power-off", One,\n
+                "subsystem-id", Buffer(0x04) { 0x70, 0x72, 0x00, 0x00 }\n
+                }, Local0)\n
+                DTGP (Arg0, Arg1, Arg2, Arg3, RefOf (Local0))\n
+                Return (Local0)\n
+            }\n
+end;

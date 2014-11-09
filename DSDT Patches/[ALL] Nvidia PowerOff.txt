@@ -1,0 +1,8 @@
+#By Ramalama
+# Change PEG0 and PEGP to your Nvidia Location…
+# PEG0 and PEGP can be different!
+
+into Method label _INI parent_label _SB.PCI0.PEG0.PEGP insert
+begin
+_OFF
+end;

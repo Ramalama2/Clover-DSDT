@@ -1,0 +1,71 @@
+# Patch by EMlyDinEsH (OSXLatitude)
+# Patch for making Asus Wifi/BT Fn key to work with two toggles on/off
+
+# Replacing method _Q0B for Wifi/BT F2 key to work in two toggles
+# by removing the code which prevents 
+into Method label _Q0B replace_content begin 
+                         If (LEqual (WBTS, One))\n
+                            {\n
+                                OBTD (Zero)\n
+                                ^^^^ATKD.IANE (0x7E)\n
+                                Store (Zero, WBTS)\n
+                            }\n
+                            Else\n
+                            {\n
+                                OBTD (One)\n
+                                ^^^^ATKD.IANE (0x7D)\n
+                                Store (One, WBTS)\n
+                            }
+ end;
+
+# Inserting WiFi/BT state storing field
+into device label EC0 code_regex Name\s\(WBTS,\sOne\) remove_matched;
+into device label EC0 insert begin Name (WBTS, One) end;
+
+# Insert WiFI/BT Status Toggle Method
+into method label WFBT remove_entry;
+into definitionblock code_regex . insert
+begin
+Method (WFBT, 0, NotSerialized)\n
+{\n
+    If (\_SB.PCI0.LPCB.EC0.WBTS)\n
+    {\n
+        OWLD (One)\n
+        Sleep (0x0DAC)\n
+        OBTD (One)\n
+    }\n
+    Else\n
+    {\n
+        OWLD (Zero)\n
+        Sleep (0x0DAC)\n
+        OBTD (Zero)\n
+    }\n
+}
+end;
+
+# Fix Bluetooth LED
+into method label OBTD remove_entry;
+into definitionblock code_regex . insert
+begin
+Method (OBTD, 1, Serialized)\n
+        {\n
+            Store (Arg0, \_SB.BRST)\n
+            SGPL (0x57, One, Arg0)\n
+            XOr (Arg0, One, Arg0)\n
+            SGPL (0x2E, One, Arg0)\n
+        }
+end;
+
+
+into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Linux"\)\)\s+\{ replace_matched
+begin If(LOr(_OSI("Darwin"),_OSI("Linux")))\n
+{\n
+WFBT()\n
+^LPCB.EC0._Q0B ()
+end;
+
+# Insert Sleep Wake WiFi/BT Status
+into_all method label _WAK code_regex WAK\s\(Arg0\) replaceall_matched begin 
+WFBT()\n
+WAK (Arg0)\n  
+end; 

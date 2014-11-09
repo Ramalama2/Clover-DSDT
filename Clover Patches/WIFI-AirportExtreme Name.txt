@@ -1,0 +1,17 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>AirPort Extreme Patch</string>
+				<key>Find</key>
+				<data>
+				axAAAHUN
+				</data>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>
+				axAAAJCQ
+				</data>
+			</dict>
+	</array>

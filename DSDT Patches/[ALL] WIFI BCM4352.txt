@@ -1,0 +1,21 @@
+#By Ramalama
+# Change PXSX and RP04 to your own Location!
+# Broadcom BCM4352 Only!
+
+#   Airport Extreme
+into method label _DSM parent_label PXSX remove_entry;
+into device label PXSX parent_label RP04 insert
+begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
+    Return (Package()\n
+    {\n
+"device-id", Buffer (0x04) { 0xA3, 0x43, 0x00, 0x00 },\n
+"compatible", Buffer (0x04) { 0xA0, 0x43, 0x00, 0x00 },\n
+"subsystem-id", Buffer (0x04) { 0x17, 0x01, 0x00, 0x00 },\n
+"subsystem-vendor-id", Buffer (0x04) { 0x6B, 0x10, 0x00, 0x00 },\n
+"name", Buffer (0x0D) { "pci14e4,43a3" }\n
+    })\n
+}\n
+end;

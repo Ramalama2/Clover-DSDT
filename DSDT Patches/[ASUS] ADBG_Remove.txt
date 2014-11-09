@@ -1,0 +1,7 @@
+into device label ADBG remove_entry;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;
+into_all all code_regex ADBG\s+\(.*\) remove_matched;

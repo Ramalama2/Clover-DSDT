@@ -1,0 +1,19 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Enable XHCI PowerManagement if not in DSDT</string>
+				<key>Find</key>
+				<data>
+				dU1Ii7voAQAA
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				601Ii7voAQAA
+				</data>
+			</dict>
+	</array>

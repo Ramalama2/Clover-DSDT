@@ -1,0 +1,19 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Fix not working USB After Sleep</string>
+				<key>Find</key>
+				<data>
+				xoDIAAAAAQ==
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				xoDIAAAAAA==
+				</data>
+			</dict>
+	</array>

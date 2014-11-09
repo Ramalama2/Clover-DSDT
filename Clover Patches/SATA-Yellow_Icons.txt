@@ -1,0 +1,17 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Yellow-Icon - External-Internal</string>
+				<key>Find</key>
+				<data>
+				RXh0ZXJuYWw=
+				</data>
+				<key>Name</key>
+				<string>AppleAHCIPort</string>
+				<key>Replace</key>
+				<data>
+				AAAAAAAAAAA=
+				</data>
+			</dict>
+	</array>

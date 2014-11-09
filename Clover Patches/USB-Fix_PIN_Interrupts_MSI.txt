@@ -1,0 +1,51 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Patch MSI or pin interrupts #1</string>
+				<key>Find</key>
+				<data>
+				gUkIAABAAA==
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				gUkIAAAAAA==
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Patch MSI or pin interrupts #2</string>
+				<key>Find</key>
+				<data>
+				lcNBx0cIAABAAA==
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				lcNBx0cIAAAAAA==
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Patch MSI or pin interrupts #3</string>
+				<key>Find</key>
+				<data>
+				RZRBx0cIAABAAA==
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				RZRBx0cIAAAAAA==
+				</data>
+			</dict>
+	</array>

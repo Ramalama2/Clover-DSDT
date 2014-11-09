@@ -1,0 +1,14 @@
+# Patches for getting Asus keyboard backlight keys to work with my driver AsusNBFnKeys in newer notebooks(use this only it wasn't working with my driver)
+
+# Method SKBL for keyboard backlight support
+into Method label SKBL remove_entry; 
+into Device label ATKD insert begin
+Method (SKBL, 1, NotSerialized)\n
+            {\n
+                Store (Arg0, Local0)\n
+                Store (DerefOf (Index (PWKB, Local0)), Local1)\n
+                ^^PCI0.LPCB.EC0.WRAM (0x044B, Local1)\n
+                Return (One)\n
+            }
+end;
+

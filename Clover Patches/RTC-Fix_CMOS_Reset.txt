@@ -1,0 +1,17 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>AppleRTC CMOS Fix</string>
+				<key>Find</key>
+				<data>
+				AAB1Lg+2
+				</data>
+				<key>Name</key>
+				<string>AppleRTC</string>
+				<key>Replace</key>
+				<data>
+				AADrLg+2
+				</data>
+			</dict>
+	</array>

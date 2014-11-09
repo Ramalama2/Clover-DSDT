@@ -1,0 +1,55 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>HD4600 Azul Patch</string>
+				<key>Find</key>
+				<data>
+				PYaAEgQ=
+				</data>
+				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Replace</key>
+				<data>
+				PYaAFgQ=
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>HD4600 Graphics Patch</string>
+				<key>Find</key>
+				<data>
+				hoASBA==
+				</data>
+				<key>Name</key>
+				<string>AppleIntelHD5000Graphics</string>
+				<key>Replace</key>
+				<data>
+				hoAWBA==
+				</data>
+			</dict>
+<dict>
+    <key>Comment</key>
+    <string>QECI HD4600 InfoPatch</string>
+    <key>Find</key>
+    <string>0x04128086</string>
+    <key>InfoPlistPatch</key>
+    <string>Yes</string>
+    <key>Name</key>
+    <string>AppleIntelHD5000Graphics</string>
+    <key>Replace</key>
+    <string>0x04168086</string>
+</dict>
+<dict>
+    <key>Comment</key>
+    <string>HD4600 InfoPatch Azul</string>
+    <key>Find</key>
+    <string>0x04128086</string>
+    <key>InfoPlistPatch</key>
+    <string>Yes</string>
+    <key>Name</key>
+    <string>AppleIntelFramebufferAzul</string>
+    <key>Replace</key>
+    <string>0x04168086</string>
+</dict>
+	</array>

@@ -1,0 +1,45 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>HDMI Audio 2</string>
+				<key>Find</key>
+				<data>
+				PQwKAAAPhA==
+				</data>
+				<key>Name</key>
+				<string>AppleHDAController</string>
+				<key>Replace</key>
+				<data>
+				PQwMAAAPhA==
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>HDMI Audio 1</string>
+				<key>Find</key>
+				<data>
+				PQwKAAB0Dg==
+				</data>
+				<key>Name</key>
+				<string>AppleHDAController</string>
+				<key>Replace</key>
+				<data>
+				PQwMAAB0Dg==
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>HDMI Audio 3</string>
+				<key>Find</key>
+				<data>
+				PQwKAAAPhSABAAA=
+				</data>
+				<key>Name</key>
+				<string>AppleHDAController</string>
+				<key>Replace</key>
+				<data>
+				PQwMAAB0S5CQkJA=
+				</data>
+			</dict>
+	</array>

@@ -1,0 +1,19 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Disable XHCI 1.0 check</string>
+				<key>Find</key>
+				<data>
+				Zj0AAQ==
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				Zj0AAA==
+				</data>
+			</dict>
+	</array>

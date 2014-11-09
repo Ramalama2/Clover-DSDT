@@ -1,0 +1,19 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>Disable Intel Logic USB3.0 check</string>
+				<key>Find</key>
+				<data>
+				dTpIiwWLoAAA
+				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>
+				6zpIiwWLoAAA
+				</data>
+			</dict>
+	</array>

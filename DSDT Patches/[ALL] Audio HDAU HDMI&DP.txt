@@ -1,0 +1,29 @@
+#By Ramalama
+# Note: Use Same Layout ID as in HDEF!
+
+# rename B0D3 -> HDAU
+into_all all code_regex B0D3\. replaceall_matched begin HDAU. end;
+into_all all code_regex \.B0D3 replaceall_matched begin .HDAU end;
+into_all all code_regex \sB0D3, replaceall_matched begin HDAU, end;
+into_all all code_regex \(B0D3 replaceall_matched begin (HDAU end;
+into_all all label B0D3 set_label begin HDAU end;
+into_all all label _SB.PCI0.B0D3 set_label begin _SB.PCI0.HDAU end;
+into_all all label \_SB.PCI0.B0D3 set_label begin \_SB.PCI0.HDAU end;
+into_all all label ^^B0D3 set_label begin ^^HDAU end;
+into_all all label ^B0D3 set_label begin ^HDAU end;
+
+into method label _DSM parent_label HDAU remove_entry;
+into device label HDAU insert
+begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
+    Return (Package()\n
+    {\n
+        "hda-gfx", Buffer() { "onboard-1" },\n
+        "layout-id", Buffer() { 0x01, 0x00, 0x00, 0x00 },\n ### Use Same ID as for HDEF!
+    })\n
+}\n
+end;
+
+

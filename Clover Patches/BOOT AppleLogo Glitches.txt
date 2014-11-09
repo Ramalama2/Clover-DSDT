@@ -1,0 +1,31 @@
+<key>KextsToPatch</key>
+<array>
+	<dict>
+		<key>Comment</key>
+		<string>Second Stage Boot1</string>
+		<key>Find</key>
+		<data>
+		hcB0XUg=
+		</data>
+		<key>Name</key>
+		<string>IOGraphicsFamily</string>
+		<key>Replace</key>
+		<data>
+		McB0W0g=
+		</data>
+	</dict>
+        <dict>
+            <key>Comment</key>
+            <string>Second Stage Boot2</string>
+            <key>Find</key>
+            <data>
+            QYjE6wM=
+            </data>
+            <key>Name</key>
+            <string>IOGraphicsFamily</string>
+            <key>Replace</key>
+            <data>
+            QYjE6yM=
+            </data>
+        </dict>
+</array>
