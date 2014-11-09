@@ -1,0 +1,17 @@
+<key>KextsToPatch</key>
+	<array>
+			<dict>
+				<key>Comment</key>
+				<string>BT4.0 HandOff &amp; Hotspot</string>
+				<key>Find</key>
+				<data>
+				i4eMAQAA
+				</data>
+				<key>Name</key>
+				<string>IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>
+				uA8AAACQ
+				</data>
+			</dict>
+	</array>
