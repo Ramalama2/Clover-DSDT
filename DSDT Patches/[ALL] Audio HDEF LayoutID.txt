@@ -12,9 +12,9 @@ Method (_DSM, 4, NotSerialized)\n
     If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
     Return (Package()\n
     {\n
-        "layout-id", Buffer() { 0x01, 0x00, 0x00, 0x00 },\n  ### Change to your LayoutID
+        "layout-id", Buffer() { 0x01, 0x00, 0x00, 0x00 },  // Change to your LayoutID\n
         "PinConfigurations", Buffer() { },\n
-###       "hda-gfx", Buffer() { "onboard-1" },\n  ### ADD this if you have no HDAU Device Only!
+###       "hda-gfx", Buffer() { "onboard-1" }, ### ADD this if you have no HDAU Device Only!\n 
         "MaximumBootBeepVolume", 77,\n
     })\n
 }\n

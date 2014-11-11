@@ -1,7 +1,5 @@
-#Maintained by: RehabMan for: Laptop Patches
-#system_SMBUS.txt
+#By Rama
 
-#   SMBUS fix
 into device label BUS0 parent_adr 0x001F0003 remove_entry;
 into device name_adr 0x001F0003 insert
 begin

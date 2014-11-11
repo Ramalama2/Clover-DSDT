@@ -4,5 +4,5 @@
 
 into Method label _INI parent_label _SB.PCI0.PEG0.PEGP insert
 begin
-_OFF
+_OFF ()
 end;
