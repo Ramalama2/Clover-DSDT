@@ -1,0 +1,108 @@
+#Maintained by: RehabMan for: Laptop Patches
+#Rewritten by Rama
+#graphics_PNLF_haswell.txt
+
+# This patch enables the brightness slider in SysPrefs->Displays
+# and will also enable activation of sleep mode by closing
+# the laptop lid.
+#
+# This particular version is intended to be used with ACPIBacklight.kext
+# although it can also be used with AppleBacklight.kext,
+# provided AppleBacklight.kext is patched to recognize your 
+# display or an injector is used to set brightness levels.
+#
+# See this thread for more information:
+#     http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
+# (also read any linked threads)
+#
+# Note: This patch should be applied to the DSDT or SSDT that defines
+# your integrated graphics device (always at _ADR 0x00020000)
+#
+
+into_all device label PNLF remove_entry;
+into_all device name_adr 0x00020000 code_regex (OperationRegion\s\(IGD2,\sPCI_Config[^\}]*\}) remove_matched;
+into_all device name_adr 0x00020000 code_regex (OperationRegion\s\(RMPC,\sPCI_Config[^\}]*\}) remove_matched;
+
+into device name_adr 0x00020000 insert
+begin
+    OperationRegion (RMPC, PCI_Config, 0x10, 4)\n
+    Field (RMPC, AnyAcc, NoLock, Preserve)\n
+    {\n
+        BAR1,32,\n
+    }\n
+end;
+into scope label _SB insert
+begin
+    Device (PNLF)\n
+        {\n
+            Name (_ADR, Zero)  // _ADR: Address\n
+            Name (_HID, EisaId ("APP0002"))  // _HID: Hardware ID\n
+            Name (_CID, "backlight")  // _CID: Compatible ID\n
+            Name (_UID, 0x0A)  // _UID: Unique ID\n
+            Name (_STA, 0x0B)  // _STA: Status\n
+            \n
+            Name (LMAX, 0)         // Maximal Brightness, 0=Automatic, Default=2777,\n
+                                   // Dont set below 1000, (Optimal: 1000-8000)\n
+            Name (SCFT, 20)         // Scale Factor, (Good Values: 6-50) (Possible: 0-100)\n
+            // Higher Values = High Difference in Lower Steps, Less Difference in High Steps\n
+            // Lower Values = Less Difference in Lower Steps, High Difference in High Steps\n
+            Name (BMIN, 0)         // Minimal Brightness Level in Step (0-100)\n
+            Name (BMAX, 100)       // Maximal Brightness Level in Step (0-100)\n
+            Name (ACBR, 80)        // Plugin AC Brightness in Step (0-100)\n
+            Name (BATB, 60)        // Going to Battery Brightness in Step (0-100)\n
+            Name (XOPT, 0)         // ACPIBacklight Animation 0=ON, 1=OFF\n
+            \n
+            OperationRegion (BRIT, SystemMemory, Add (^PCI0.IGPU.BAR1, 0xC824F), 0x05)\n
+            Field (BRIT, AnyAcc, Lock, Preserve)\n
+            {\n
+                SLBT, 8,\n
+                XBQC, 16,\n
+                MAXL, 16,\n
+            }\n
+            \n
+            Method (_INI, 0, NotSerialized)  // _INI: Initialize\n
+            {\n
+                Store (0xC0, SLBT)    // 0xC0=Enabled, 0x80=Disabled\n
+                If (LGreater (LMAX, 0x200)) {\n
+                    Store (LMAX, MAXL) }\n
+                ElseIf (LOr(LNot(MAXL), LLess(MAXL, 0x200))) {\n
+                    Store (0xad9, MAXL)\n
+                    Store (0xad9, LMAX) }\n
+                Else { Store (MAXL, LMAX) }\n
+            }\n
+\n
+            Method (XBCM, 1, NotSerialized)  // _BCM: Brightness Control Method\n
+            {\n
+                Store (DerefOf(Index(_BCL, Add(BMIN,2))), Local0)\n
+                Store (DerefOf(Index(_BCL, Add(BMAX,2))), Local1)\n
+                If (LLess (Arg0, Local0)) { Store (Local0, Arg0) }\n
+                If (LGreater (Arg0, Local1)) { Store (Local1, Arg0) }\n
+                Store (LMAX, MAXL)\n
+                Store (Arg0, XBQC)\n
+            }\n
+            \n
+            Method (_DOS, 1, NotSerialized)  // _DOS: Disable Output Switching\n
+            {\n
+                ^^PCI0.IGPU._DOS (Arg0)\n
+            }\n
+            \n
+            Method (_BCL, 0, NotSerialized)  // _BCM: Brightness Control Method\n
+            {\n
+                Name (PKBC, Package (0x67) {})\n
+                Store (Divide (Multiply(Multiply(0x64, Add(SCFT,0x64)), 100), MAXL), Local0)\n
+                Store (Divide(Multiply(Multiply(ACBR, Add(SCFT,ACBR)), 100), Local0), Index (PKBC, Zero))\n
+                Store (Divide(Multiply(Multiply(BATB, Add(SCFT,BATB)), 100), Local0), Index (PKBC, One))\n
+                Store (Zero, Local1)\n
+                While (LLess (Local1, 0x65))\n
+                {\n
+                    Store (Divide(Multiply(Multiply(Local1, Add(SCFT, Local1)), 100), Local0), Index (PKBC, Add(Local1, 2)))\n
+                    Increment (Local1)\n
+                }\n
+                // Just to get sure that last level is exactly MAX Level,\n
+                // and not -1/+1 because of the calculation precision, add this line:\n
+                Store (MAXL, Index (PKBC, 0x66))\n
+                Return (PKBC)\n
+            }\n
+        }\n
+end;
+
