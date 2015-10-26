@@ -106,3 +106,9 @@ begin
         }\n
 end;
 
+# Hibernate Brightness Fix
+into method label _WAK code_regex ([\s\S]*) replace_matched
+begin
+Store (0xC0, \_SB.PNLF.SLBT)\n
+%1
+end;

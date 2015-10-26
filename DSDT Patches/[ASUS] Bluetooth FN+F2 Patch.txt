@@ -41,6 +41,24 @@ Method (OBTD, 1, Serialized)\n
         }
 end;
 
+# Fix Read GPL
+into method label RGPL remove_entry;
+into definitionblock code_regex . insert
+begin
+Method (RGPL, 2, Serialized)\n
+        {\n
+            If ((Arg0 <= 0x5E))\n
+            {\n
+                Local0 = ((GPBS + 0x0100) + (Arg0 * 0x08))\n
+                OperationRegion (LGPI, SystemIO, Local0, 0x04)\n
+                Field (LGPI, ByteAcc, NoLock, Preserve)\n
+                {\n
+                        ,   31, \n
+                    TEMP,   1\n
+                }\n
+                Return (TEMP) } Else { Return (Zero) }\n
+        }
+end;
 
 into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Linux"\)\)\s+\{ replace_matched
 begin If(LOr(_OSI("Darwin"),_OSI("Linux")))\n

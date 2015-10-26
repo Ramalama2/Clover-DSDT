@@ -5,19 +5,8 @@ into device name_adr 0x001F0003 insert
 begin
 Device (BUS0)\n
 {\n
-    Name (_CID, "smbus")\n
-    Name (_ADR, Zero)\n
-    Device (BLC0)\n
-    {\n
-        Name (_ADR, Zero)\n
-        Name (_STA, 0x0F)\n
-        Name (_CID, "smbus-blc")\n
-        Method (_DSM, 4, NotSerialized)\n
-        {\n
-            If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
-            Return (Package() { "address", 0x2c })\n
-        }\n
-    }\n
+Name (_CID, "smbus")  // _CID: Compatible ID\n
+Name (_ADR, 0x00)  // _ADR: Address\n
 }\n
 end;
 
